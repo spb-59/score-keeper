@@ -17,5 +17,5 @@ def printGame(scores:dict):
     )
 
 
-    return f"```\n{out}\n```"
+    return f"```\n{out}\n``` id:{scores["_id"]}"
 

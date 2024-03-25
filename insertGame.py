@@ -1,8 +1,7 @@
 
 from pymongo_get_database import get_games
+from insertPlayer import insertPlayer
 
-def insertPlayer(player,score):
-    return
 
 
 def calculateScores(scores:dict):
@@ -15,8 +14,7 @@ def calculateScores(scores:dict):
 
 
 
-
-def insertGame(args):
+async def insertGame(ctx,args):
     #getting the database
     dbname = get_games()
 
@@ -31,7 +29,7 @@ def insertGame(args):
     if len(scores)>4: gameName=scores.pop()
     if gameName[0]=="-" : gameName=gameName[1:]
         
-    games = dbname[gameName]
+    games = dbname['games']
 
     #dict that is populated to be insterted into the db
     insert={}
@@ -44,8 +42,21 @@ def insertGame(args):
     insert=dict(sorted(insert.items(),key=lambda x:x[1],reverse=True))
     calculateScores(insert)
 
+    fail=False
+    for i,score in insert.items():
+        if not insertPlayer(i,score):
+            await ctx.send(f' ``` {i} is not registered ``` \n Please register using /register username')
+            fail=True
+            
+    
 
 
-    games.insert_one(insert)
+
+
+
+    if gameName!="default": insert["_id"]=gameName
+    if fail: insert=None
+    else:games.insert_one(insert)
+
     return insert
 
