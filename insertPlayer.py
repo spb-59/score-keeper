@@ -21,6 +21,12 @@ def insertPlayer(i, score: list):
     player.insert_one({"date": d, "score": score[1]})
     return True
 
+def searchPlayer(name):
+    dbname = get_players()
+   
+    if name not in dbname.list_collection_names():
+        return False
+    return True
 
 async def register_player(ctx, name):
     dbname = get_players()
