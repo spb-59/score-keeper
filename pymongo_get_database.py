@@ -1,11 +1,14 @@
+from dotenv import load_dotenv
 from pymongo import MongoClient
-def get_games():
+import os
 
-   CONNECTION_STRING = "mongodb+srv://spb:5.aM%404MWgM4SX4S@scoredata.qtuwpvy.mongodb.net/?retryWrites=true&w=majority&appName=ScoreData"
+load_dotenv()
+CONNECTION_STRING = os.getenv('CONNECTION_STRING')
+
+def get_games():
    client = MongoClient(CONNECTION_STRING)
    return client['scores']
   
 def get_players():
-   CONNECTION_STRING = "mongodb+srv://spb:5.aM%404MWgM4SX4S@scoredata.qtuwpvy.mongodb.net/?retryWrites=true&w=majority&appName=ScoreData"
    client = MongoClient(CONNECTION_STRING)
    return client['players']

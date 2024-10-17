@@ -1,0 +1,4 @@
+pymongo
+table2ascii
+discord
+python-dotenv
